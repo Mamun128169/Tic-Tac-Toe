@@ -57,8 +57,8 @@ const checkWinner = () => {
   for (let pattern of winPatterns) {
     let [a, b, c] = pattern;
     let pos1Val = boxes[a].innerText;
-    let pos2Val = boxes[a].innerText;
-    let pos3Val = boxes[a].innerText;
+    let pos2Val = boxes[b].innerText;
+    let pos3Val = boxes[c].innerText;
 
     if (pos1Val !== "" && pos1Val === pos2Val && pos2Val === pos3Val) {
       console.log("winner!", pos1Val);
@@ -70,7 +70,7 @@ const checkWinner = () => {
   return false;
 };
 
-// Handel Box Click
+// Handle Box Click
 boxes.forEach((box) => {
   box.addEventListener("click", () => {
     if (turnO) {
