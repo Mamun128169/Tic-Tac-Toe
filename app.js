@@ -44,12 +44,12 @@ const resetGame = () => {
   turnO = true;
   count = 0;
   enableBoxes();
+  messageContainer.classList.add("hide");
 };
 
 // New Game
 const newGame = () => {
   resetGame();
-  messageContainer.classList.add("hide");
 };
 
 // Check Winner
@@ -60,40 +60,45 @@ const checkWinner = () => {
     let pos2Val = boxes[a].innerText;
     let pos3Val = boxes[a].innerText;
 
-    if (pos1Val !== "" && pos2Val !== "" && pos3Val !== "") {
-      if (pos1Val === pos2Val && pos2Val === pos3Val) {
-        console.log("winner!", pos1Val);
-        disabledBoxes();
-        showWinner(pos1Val);
-      }
+    if (pos1Val !== "" && pos1Val === pos2Val && pos2Val === pos3Val) {
+      console.log("winner!", pos1Val);
+      disabledBoxes();
+      showWinner(pos1Val);
+      return true;
     }
   }
+  return false;
 };
 
-// Game Logic
+// Handel Box Click
 boxes.forEach((box) => {
   box.addEventListener("click", () => {
     if (turnO) {
       box.innerText = "O";
       box.style.color = "#1668E3";
-      turnO = !turnO;
     } else {
       box.innerText = "X";
       box.style.color = "#E31616";
-      turnO = !turnO;
     }
 
-    checkWinner();
     box.disabled = true;
-
+    turnO = !turnO;
     count++;
-    // Check game tie or not
+
+    if (checkWinner()) {
+      return; // stop game if there's a winner
+    }
+
+    // Check for Tie
     if (count === 9) {
-      alert(`The Game is Tied. Press "OK" to start!`);
-      resetGame();
+      setTimeout(() => {
+        alert("The game is tied! Press OK to restart.");
+        resetGame();
+      }, 100);
     }
   });
 });
 
+// Event Listeners
 resetBtn.addEventListener("click", resetGame);
 newGameBtn.addEventListener("click", newGame);
