@@ -61,7 +61,7 @@ const checkWinner = () => {
     let pos3Val = boxes[c].innerText;
 
     if (pos1Val !== "" && pos1Val === pos2Val && pos2Val === pos3Val) {
-      console.log("winner!", pos1Val);
+      // console.log("winner!", pos1Val);
       disabledBoxes();
       showWinner(pos1Val);
       return true;
